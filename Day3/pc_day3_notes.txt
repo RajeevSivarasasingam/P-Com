@@ -1,0 +1,99 @@
+//one to many
+
+
+#include <mpi.h>   // MPI header file
+#include <stdio.h> // Standard I/O header
+
+int main() {
+    int np;   // number of processes
+    int pid;  // process ID (rank)
+
+    // Initialize the MPI environment
+    MPI_Init(NULL, NULL);
+
+    // Get the total number of processes
+    MPI_Comm_size(MPI_COMM_WORLD, &np);
+
+    // Get the rank (ID) of the current process
+    MPI_Comm_rank(MPI_COMM_WORLD, &pid);
+
+    // Master process (rank 0) sends data to all other processes
+    if (pid == 0) {
+        int num = 3; // value to send
+
+        // Loop through all other processes (1 to np-1)
+        for (int i = 1; i < np; i++) {
+            // Send 'num' to process i
+            MPI_Send(&num, 1, MPI_INT, i, 50, MPI_COMM_WORLD);
+        }
+
+        // Print confirmation from master
+        printf("Master PID : %d, Sent value : %d\n", pid, num);
+    } 
+    else {
+        // Slave processes (rank > 0) receive data from master
+        int recv_num;     // variable to store received value
+        MPI_Status sta;   // status object to hold info about the receive
+
+        // Receive one integer from master (rank 0)
+        MPI_Recv(&recv_num, 1, MPI_INT, 0, 50, MPI_COMM_WORLD, &sta);
+
+        // Print confirmation from each slave
+        printf("Slave PID : %d, Received value: %d\n", pid, recv_num);
+    }
+
+    // Finalize the MPI environment
+    MPI_Finalize();
+
+    return 0;
+}
+
+
+// many to one 
+#include <mpi.h>   // MPI header file
+#include <stdio.h> // Standard I/O header
+
+int main() {
+    int np;   // number of processes
+    int pid;  // process ID (rank)
+
+    // Initialize the MPI environment
+    MPI_Init(NULL, NULL);
+
+    // Get the total number of processes
+    MPI_Comm_size(MPI_COMM_WORLD, &np);
+
+    // Get the rank (ID) of the current process
+    MPI_Comm_rank(MPI_COMM_WORLD, &pid);
+
+    if (pid == 0) {
+        // Master process: receives values from all slaves
+        printf("Master PID : %d, waiting for values...\n", pid);
+
+        for (int i = 1; i < np; i++) {
+            int recv_num;
+            MPI_Status sta;
+
+            // Receive one integer from slave i
+			MPI_Recv(&recv_num, 1, MPI_INT, i, 50, MPI_COMM_WORLD, &sta);
+
+            // Print confirmation of received value
+            printf("Master received value %d from Slave %d\n", recv_num, i);
+        }
+    }
+    else {
+        // Slave processes: send a value to the master
+        int num = pid * 10; // each slave generates a unique value
+        MPI_Send(&num, 1, MPI_INT, 0, 50, MPI_COMM_WORLD);
+
+        // Print confirmation of sent value
+        printf("Slave PID : %d, Sent value: %d\n", pid, num);
+    }
+
+    // Finalize the MPI environment
+    MPI_Finalize();
+
+    return 0;
+}
+
+ 

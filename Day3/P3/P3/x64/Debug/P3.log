@@ -1,0 +1,9 @@
+﻿  P3.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(700,5): error MSB6006: "CL.exe" exited with code 2.
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(12,25): error C2131: expression did not evaluate to a constant
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(12,25): message : failure was caused by a read of a variable outside its lifetime
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(12,25): message : see usage of 'np'
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(20,20): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int [np]'
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(20,20): warning C4313: 'printf': '%d' in format string conflicts with argument 1 of type 'int [np]'
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(26,20): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'int [np]'
+C:\Users\User\Documents\2021ict102\P-com\Day3\P3\P3\P3.cpp(26,20): warning C4313: 'printf': '%d' in format string conflicts with argument 2 of type 'int [np]'
