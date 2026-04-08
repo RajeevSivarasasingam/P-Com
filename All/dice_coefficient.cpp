@@ -1,9 +1,7 @@
 //mpiexec -n 4 sample.exe
 // Dice coefficient (T3 Q1)
-
 #include <mpi.h>
 #include <stdio.h>
-
 int main()
 {
 	int np;
@@ -17,8 +15,7 @@ int main()
 	int recv_B[8];
 	int local_intersection =0;
 	int total_intersection =0;
-
-
+	
 	if (pid == 0)
 	{
 		int tempA[32] = { 45,41,92,79,11,83,97,91,98,67,53,34,68,72,76,12,
@@ -120,12 +117,23 @@ int main()
 		printf("\n loacl |AnB|: %d \n", local_intersection);
 		MPI_Send(&local_intersection, 1, MPI_INT, 0, 60, MPI_COMM_WORLD);
 
-	}
-	 
-	 
-	 
+	}	 
 	MPI_Finalize();
-
 }
 
+//output
+ //loacl |AnB|: 7
+//other process
 
+ loacl |AnB|: 2
+other process
+
+ loacl |AnB|: 4
+process 0
+A:      45      41      92      79      11      83      97      91      98      67      53      34      68      72     76       12      78      59      64      6       89      62      26      23      17      35      36      18      25     55       43      56
+ B:     5       18      96      63      23      10      42      34
+ loacl |AnB|: 3
+
+toatal intersection: 16
+dice Coefficient: 0.500
+similarity :50.00%
